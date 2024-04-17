@@ -53,7 +53,7 @@ func (r *repo) Create(ctx context.Context, user *domain.User) error {
 func (r *repo) GetAll(ctx context.Context) ([]domain.User, error) {
 	var users []domain.User
 	sqlQ := "SELECT id, first_name, last_name, email FROM users"
-	
+
 	rows, err := r.db.Query(sqlQ)
 	if err != nil {
 		r.log.Println(err.Error())
@@ -61,11 +61,11 @@ func (r *repo) GetAll(ctx context.Context) ([]domain.User, error) {
 	}
 	defer rows.Close()
 
-	for rows.Next(){
+	for rows.Next() {
 		var u domain.User
 		if err := rows.Scan(&u.ID, &u.FirstName, &u.LastName, &u.Email); err != nil {
-				r.log.Println(err.Error())
-				return nil, err
+			r.log.Println(err.Error())
+			return nil, err
 		}
 		users = append(users, u)
 	}
@@ -76,9 +76,9 @@ func (r *repo) GetAll(ctx context.Context) ([]domain.User, error) {
 func (r *repo) Get(ctx context.Context, id uint64) (*domain.User, error) {
 	sqlQ := "SELECT id, first_name, last_name, email FROM users WHERE id = ?"
 	var u domain.User
-	if err := r.db.QueryRow(sqlQ, id).Scan(&u.ID, &u.FirstName, &u.LastName, &u.Email); err != nil{
+	if err := r.db.QueryRow(sqlQ, id).Scan(&u.ID, &u.FirstName, &u.LastName, &u.Email); err != nil {
 		r.log.Println(err.Error())
-		if err == sql.ErrNoRows{
+		if err == sql.ErrNoRows {
 			return nil, ErrNotFound{id}
 		}
 		return nil, err
@@ -87,10 +87,10 @@ func (r *repo) Get(ctx context.Context, id uint64) (*domain.User, error) {
 	return &u, nil
 }
 
-func (r *repo) Update(ctx context.Context, id uint64, firstName, lastName, email *string) error{
+func (r *repo) Update(ctx context.Context, id uint64, firstName, lastName, email *string) error {
 	var fields []string
 	var values []interface{}
-	
+
 	if firstName != nil {
 		fields = append(fields, "first_name=?")
 		values = append(values, *firstName)

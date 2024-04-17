@@ -12,7 +12,7 @@ type (
 	Endpoints struct {
 		Create Controller
 		GetAll Controller
-		Get Controller
+		Get    Controller
 		Update Controller
 	}
 
@@ -27,7 +27,7 @@ type (
 	}
 
 	UpdateReq struct {
-		ID uint64
+		ID        uint64
 		FirstName *string `json:"first_name"`
 		LastName  *string `json:"last_name"`
 		Email     *string `json:"email"`
@@ -38,7 +38,7 @@ func MakeEndpoints(ctx context.Context, s Service) Endpoints {
 	return Endpoints{
 		Create: makeCreateEndpoint(s),
 		GetAll: makeGetallEndpoint(s),
-		Get: makeGetEndpoint(s),
+		Get:    makeGetEndpoint(s),
 		Update: makeUpdateEndpoint(s),
 	}
 }
@@ -99,7 +99,7 @@ func makeUpdateEndpoint(s Service) Controller {
 			return nil, response.BadRequest(ErrLastNameRequired.Error())
 		}
 
-		if err := s.Update(ctx, req.ID, req.FirstName, req.LastName, req.Email); err != nil{
+		if err := s.Update(ctx, req.ID, req.FirstName, req.LastName, req.Email); err != nil {
 			if errors.As(err, &ErrNotFound{}) {
 				return nil, response.NotFound(err.Error())
 			}

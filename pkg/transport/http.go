@@ -55,14 +55,14 @@ func (t *transport) Server(
 	}
 }
 
-func Clean(url string) ([]string, int){
+func Clean(url string) ([]string, int) {
 	if url[0] != '/' {
 		url = "/" + url
 	}
 	if url[len(url)-1] != '/' {
 		url = url + "/"
 	}
-	parts :=strings.Split(url, "/")
+	parts := strings.Split(url, "/")
 
 	return parts, len(parts)
 }

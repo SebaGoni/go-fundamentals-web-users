@@ -50,11 +50,11 @@ func (s *service) GetAll(ctx context.Context) ([]domain.User, error) {
 	return users, nil
 }
 
-func (s service) Get(ctx context.Context, id uint64) (*domain.User, error){
+func (s service) Get(ctx context.Context, id uint64) (*domain.User, error) {
 	return s.repo.Get(ctx, id)
 }
 
-func (s service) Update(ctx context.Context, id uint64, firstName, lastName, email *string) error{
+func (s service) Update(ctx context.Context, id uint64, firstName, lastName, email *string) error {
 	if err := s.repo.Update(ctx, id, firstName, lastName, email); err != nil {
 		return err
 	}
